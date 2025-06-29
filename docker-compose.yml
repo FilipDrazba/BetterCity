@@ -1,0 +1,38 @@
+name: better-city
+services:
+  report-service:
+    profiles:
+      - report
+    build:
+      context: ./ReportService
+      dockerfile: Dockerfile
+    ports:
+      - ${REPORT_SERVICE_PORT}:8080
+    volumes:
+      - maven-report-repo:/root/.m2
+
+  report-db:
+    profiles:
+      - report
+    image: postgres:17.4
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${REPORT_DB_USERNAME} -d ${REPORT_DB_NAME}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=${REPORT_DB_NAME}
+      - POSTGRES_USER=${REPORT_DB_USERNAME}
+      - POSTGRES_PASSWORD=${REPORT_DB_PASSWORD}
+    ports:
+      - ${REPORT_DB_PORT}:5432
+    volumes:
+      - db-report-data:/var/lib/postgresql/data
+
+volumes:
+  maven-report-repo:
+  db-report-data:

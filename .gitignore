@@ -1,0 +1,73 @@
+# Build folders
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Gradle build folders
+.gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Maven files and folders
+.mvn/
+dependency-reduced-pom.xml
+release.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+
+# IDE files
+
+## IntelliJ IDEA ##
+.idea*
+*.iws
+*.iml
+*.ipr
+
+## Eclipse ##
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+## NetBeans ##
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+## VS Code ##
+.vscode/
+
+# Temporary files and logs
+*.log
+*.tmp
+*.bak
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# JVM crash logs
+hs_err_pid*
+
+# Spring Boot generated archives
+*.jar
+*.war
+*.ear
+
+# Debug and heap dump files
+*.hprof
+
+# Other
+.env*
+*.sh
+*.yml
