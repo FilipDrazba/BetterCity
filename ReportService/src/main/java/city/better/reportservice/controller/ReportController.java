@@ -4,6 +4,7 @@ import city.better.reportservice.dto.*;
 import city.better.reportservice.service.ImageService;
 import city.better.reportservice.service.ReportService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class ReportController {
     }
 
     @PostMapping
-    public ResponseEntity<ReportDto> create(@RequestPart("request") ReportDtoRequest request,
+    public ResponseEntity<ReportDto> create(@RequestPart("request") @Valid ReportDtoRequest request,
                                             @RequestPart("images") MultipartFile[] files) {
         var savedReportDto = reportService.createReport(request, files);
 
@@ -51,7 +52,7 @@ public class ReportController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ReportDto> patch(@PathVariable Long id,
-                                           @RequestBody ReportDtoRequest patch) {
+                                           @RequestBody @Valid ReportDtoRequest patch) {
         var updatedReportDto =reportService.updateReportFromPatch(id, patch);
 
         return ResponseEntity.ok(updatedReportDto);
