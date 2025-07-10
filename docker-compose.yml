@@ -1,5 +1,39 @@
 name: better-city
 services:
+  auth-service:
+    build:
+      context: ./AuthService
+      dockerfile: ./Dockerfile
+    volumes:
+      - maven-auth-repo:/root/.m2
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-db:5432/$AUTH_DB_NAME
+      - SPRING_DATASOURCE_USERNAME=$AUTH_DB_USERNAME
+      - SPRING_DATASOURCE_PASSWORD=$AUTH_DB_PASSWORD
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=$HIBERNATE_DDL_MODE
+      - AUTH_JWT_SECRET_KEY=$AUTH_JWT_SECRET_KEY
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    ports:
+      - $AUTH_SERVICE_PORT:8080
+
+  auth-db:
+    image: postgres:17.4
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $AUTH_DB_USERNAME -d $AUTH_DB_NAME" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=$AUTH_DB_NAME
+      - POSTGRES_USER=$AUTH_DB_USERNAME
+      - POSTGRES_PASSWORD=$AUTH_DB_PASSWORD
+    ports:
+      - ${AUTH_DB_PORT}:5432
+    volumes:
+      - db-auth-data:/var/lib/postgresql/data
+
   report-service:
     profiles:
       - report
@@ -41,5 +75,7 @@ services:
       - db-report-data:/var/lib/postgresql/data
 
 volumes:
+  maven-auth-repo:
   maven-report-repo:
+  db-auth-data:
   db-report-data:
