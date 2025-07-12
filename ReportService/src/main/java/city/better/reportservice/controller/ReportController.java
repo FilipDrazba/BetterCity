@@ -1,6 +1,8 @@
 package city.better.reportservice.controller;
 
+import city.better.reportservice.annotation.RoleRequired;
 import city.better.reportservice.dto.*;
+import city.better.reportservice.enums.Role;
 import city.better.reportservice.service.ImageService;
 import city.better.reportservice.service.ReportService;
 import jakarta.transaction.Transactional;
@@ -21,6 +23,7 @@ public class ReportController {
     private final ImageService imageService;
 
     @GetMapping
+    @RoleRequired(Role.EMPLOYEE)
     public ResponseEntity<List<ReportDto>> getAll() {
         var reportsDtos = reportService.getAllReports();
 
@@ -28,8 +31,9 @@ public class ReportController {
     }
 
     @GetMapping("/{id}")
+    @RoleRequired(Role.USER)
     public ResponseEntity<ReportDto> getById(@PathVariable Long id) {
-        var reportDto = reportService.getReport(id);
+        var reportDto = reportService.getReportById(id);
 
         return ResponseEntity.ok(reportDto);
     }
@@ -43,6 +47,7 @@ public class ReportController {
     }
 
     @PostMapping
+    @RoleRequired(Role.EMPLOYEE)
     public ResponseEntity<ReportDto> create(@RequestPart("request") @Valid ReportDtoRequest request,
                                             @RequestPart("images") MultipartFile[] files) {
         var savedReportDto = reportService.createReport(request, files);

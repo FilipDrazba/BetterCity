@@ -7,7 +7,6 @@ import city.better.reportservice.mapper.ImageMapper;
 import city.better.reportservice.mapper.ReportMapper;
 import city.better.reportservice.model.Image;
 import city.better.reportservice.model.Report;
-import city.better.reportservice.repository.ImageRepository;
 import city.better.reportservice.repository.ReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,21 +51,21 @@ class ReportServiceTest {
 
     @Test
     @DisplayName("getReport - when report exists - returns DTO")
-    void getReport_reportExists_returnsDto() {
+    void getReport_reportByIdExists_returnsDto() {
         when(reportRepository.findById(1L)).thenReturn(Optional.of(report1));
         when(reportMapper.toDto(report1)).thenReturn(report1Dto);
 
-        ReportDto result = reportService.getReport(1L);
+        ReportDto result = reportService.getReportById(1L);
 
         assertEquals(report1Dto, result);
     }
 
     @Test
     @DisplayName("getReport - when report does not exist - throws exception")
-    void getReport_reportNotFound_throwsException() {
+    void getReport_reportByIdNotFound_throwsException() {
         when(reportRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> reportService.getReport(1L));
+        assertThrows(ResourceNotFoundException.class, () -> reportService.getReportById(1L));
     }
 
     @Test

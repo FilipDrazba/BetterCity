@@ -38,15 +38,15 @@ public class ReportService {
         return reportMapper.toDtos(reports);
     }
 
-    public ReportDto getReport(Long id) {
-        var report = getReportById(id);
+    public ReportDto getReportById(Long id) {
+        var report = getReportByIdOrElseThrow(id);
 
         return reportMapper.toDto(report);
     }
 
     public ReportDto updateReportFromPatch(Long id,
                                            ReportDtoRequest patch) {
-        var report = getReportById(id);
+        var report = getReportByIdOrElseThrow(id);
 
         reportMapper.updateReportFromPatch(report, patch);
         reportRepository.save(report);
@@ -72,7 +72,7 @@ public class ReportService {
         }
     }
 
-    private Report getReportById(Long id) {
+    private Report getReportByIdOrElseThrow(Long id) {
         return reportRepository.findById(id)
                 .orElseThrow(() -> notFoundException(id));
     }
