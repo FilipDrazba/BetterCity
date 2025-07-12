@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "e076230b-6e1f-4648-9856-7248e5580e0f",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16520036"
+	},
+	"item": [
+		{
+			"name": "Register USER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"user@domain.pl\",\n    \"password\":\"Password123!\",\n    \"role\":\"USER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{AuthServiceBaseURL}}/auth/register",
+					"host": [
+						"{{AuthServiceBaseURL}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register UV_EMPLOYEE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"unverified.employee@domain.pl\",\n    \"password\":\"Password123!\",\n    \"role\":\"UNVERIFIED_EMPLOYEE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{AuthServiceBaseURL}}/auth/register",
+					"host": [
+						"{{AuthServiceBaseURL}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"user@domain.pl\",\n    \"password\":\"Password123!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{AuthServiceBaseURL}}/auth/login",
+					"host": [
+						"{{AuthServiceBaseURL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify employee",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_EMPLOYEE}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{AuthServiceBaseURL}}/auth/verify-employee/1",
+					"host": [
+						"{{AuthServiceBaseURL}}"
+					],
+					"path": [
+						"auth",
+						"verify-employee",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate USER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_USER}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AuthServiceBaseURL}}/auth/validate",
+					"host": [
+						"{{AuthServiceBaseURL}}"
+					],
+					"path": [
+						"auth",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate UV_EMPLOYEE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_UV_EMPLOYEE}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AuthServiceBaseURL}}/auth/validate",
+					"host": [
+						"{{AuthServiceBaseURL}}"
+					],
+					"path": [
+						"auth",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

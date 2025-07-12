@@ -1,0 +1,263 @@
+{
+	"info": {
+		"_postman_id": "653d8987-907d-440d-8fb3-cf9a34b1cafa",
+		"name": "Reports",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16520036"
+	},
+	"item": [
+		{
+			"name": "Create report",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_UV_EMPLOYEE}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "request",
+							"value": "{\"description\": \"Zepsuty przystanek\", \"latitude\": 50.06143, \"longitude\": 19.93658}",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": [
+								"postman-cloud:///1f057766-8fbb-4850-8088-deccb1b7c030",
+								"postman-cloud:///1f057766-8f80-4ed0-b315-c73c30995050"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8082/reports",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"reports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get reports",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "request",
+							"value": "{\n    \"description\": \"Zgłoszenie testowe\",\n    \"latitude\": 50.06143,\n    \"longitude\": 19.93658\n}\n",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": [
+								"/Users/eroye3/Downloads/123.jpeg",
+								"/Users/eroye3/Downloads/Bez tytułu-2025-06-27-1537.png"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8082/reports",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"reports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get report by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "request",
+							"value": "{\n    \"description\": \"Zgłoszenie testowe\",\n    \"latitude\": 50.06143,\n    \"longitude\": 19.93658\n}\n",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": [
+								"/Users/eroye3/Downloads/123.jpeg",
+								"/Users/eroye3/Downloads/Bez tytułu-2025-06-27-1537.png"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8082/reports/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"reports",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get images by reportId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "request",
+							"value": "{\n    \"description\": \"Zgłoszenie testowe\",\n    \"latitude\": 50.06143,\n    \"longitude\": 19.93658\n}\n",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": [
+								"/Users/eroye3/Downloads/123.jpeg",
+								"/Users/eroye3/Downloads/Bez tytułu-2025-06-27-1537.png"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8082/reports/1/images",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"reports",
+						"1",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete report",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "request",
+							"value": "{\n    \"description\": \"Zgłoszenie testowe\",\n    \"latitude\": 50.06143,\n    \"longitude\": 19.93658\n}\n",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": [
+								"/Users/eroye3/Downloads/123.jpeg",
+								"/Users/eroye3/Downloads/Bez tytułu-2025-06-27-1537.png"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8082/reports/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"reports",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\":\"new\",\n    \"longitude\":1.45,\n    \"latitude\":1.23\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/reports/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"reports",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
