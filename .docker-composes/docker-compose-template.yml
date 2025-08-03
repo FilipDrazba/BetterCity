@@ -1,0 +1,85 @@
+name: better-city
+services:
+  auth-service:
+    profiles:
+      - backend
+    build:
+      context: ../backend/AuthService
+      dockerfile: ./Dockerfile
+    volumes:
+      - maven-auth-repo:/root/.m2
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-db:5432/$AUTH_DB_NAME
+      - SPRING_DATASOURCE_USERNAME=$AUTH_DB_USERNAME
+      - SPRING_DATASOURCE_PASSWORD=$AUTH_DB_PASSWORD
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=$HIBERNATE_DDL_MODE
+      - AUTH_JWT_SECRET_KEY=$AUTH_JWT_SECRET_KEY
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    ports:
+      - ${AUTH_SERVICE_PORT}:8080
+
+  auth-db:
+    profiles:
+      - backend
+    image: postgres:17.4
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $AUTH_DB_USERNAME -d $AUTH_DB_NAME" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=$AUTH_DB_NAME
+      - POSTGRES_USER=$AUTH_DB_USERNAME
+      - POSTGRES_PASSWORD=$AUTH_DB_PASSWORD
+    ports:
+      - ${AUTH_DB_PORT}:5432
+    volumes:
+      - db-auth-data:/var/lib/postgresql/data
+
+  report-service:
+    profiles:
+      - backend
+    build:
+      context: ../backend/ReportService
+      dockerfile: ./Dockerfile
+    ports:
+      - ${REPORT_SERVICE_PORT}:8080
+    volumes:
+      - maven-report-repo:/root/.m2
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://report-db:5432/$REPORT_DB_NAME
+      - SPRING_DATASOURCE_USERNAME=$REPORT_DB_USERNAME
+      - SPRING_DATASOURCE_PASSWORD=$REPORT_DB_PASSWORD
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=$HIBERNATE_DDL_MODE
+      - SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=${REPORT_SERVICE_MULTIPART_MAX_FILE_SIZE}
+      - SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE=${REPORT_SERVICE_MULTIPART_MAX_REQUEST_SIZE}
+
+  report-db:
+    profiles:
+      - backend
+    image: postgres:17.4
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${REPORT_DB_USERNAME} -d ${REPORT_DB_NAME}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=${REPORT_DB_NAME}
+      - POSTGRES_USER=${REPORT_DB_USERNAME}
+      - POSTGRES_PASSWORD=${REPORT_DB_PASSWORD}
+    ports:
+      - ${REPORT_DB_PORT}:5432
+    volumes:
+      - db-report-data:/var/lib/postgresql/data
+
+volumes:
+  maven-auth-repo:
+  maven-report-repo:
+  db-auth-data:
+  db-report-data:
