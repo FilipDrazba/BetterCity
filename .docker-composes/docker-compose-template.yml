@@ -1,5 +1,18 @@
 name: better-city
 services:
+  api-gateway:
+    profiles:
+      - backend
+    build:
+      context: ../backend/ApiGateway
+    volumes:
+      - maven-api-gateway-repo:/root/.m2
+    depends_on:
+      - auth-service
+      - report-service
+    ports:
+      - ${GATEWAY_PORT}:8080
+
   auth-service:
     profiles:
       - backend
@@ -81,5 +94,6 @@ services:
 volumes:
   maven-auth-repo:
   maven-report-repo:
+  maven-api-gateway-repo:
   db-auth-data:
   db-report-data:

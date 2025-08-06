@@ -11,6 +11,7 @@
     <name>BetterCity</name>
 
     <modules>
+        <module>backend/ApiGateway</module>
         <module>backend/AuthService</module>
         <module>backend/ReportService</module>
     </modules>
